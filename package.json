@@ -8,16 +8,14 @@
     "gatsby"
   ],
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "gatsby develop",
-    "build": "gatsby build",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "typecheck": "tsc --noEmit"
+    "dev": "gatsby develop -H 0.0.0.0",
+    "build": "gatsby build"
   },
   "dependencies": {
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
+    "@types/react-helmet": "^6.1.5",
+    "@types/showdown": "^2.0.0",
     "gatsby": "^4.18.0",
     "gatsby-plugin-mdx": "^3.18.0",
     "gatsby-plugin-react-helmet": "^5.18.0",
@@ -25,7 +23,8 @@
     "gatsby-source-filesystem": "^4.18.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-helmet": "^6.1.0"
+    "react-helmet": "^6.1.0",
+    "showdown": "^2.1.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.45",
