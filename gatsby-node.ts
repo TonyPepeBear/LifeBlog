@@ -31,6 +31,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
       },
     });
   });
+  // index page
   actions.createPage({
     path: "/",
     component: path.resolve("src/templates/index.tsx"),
@@ -38,6 +39,15 @@ export const createPages: GatsbyNode["createPages"] = async ({
       mdData: allRawMD,
     },
   });
+  // sitemap.txt
+  const posts_urls = allRawMD.map(
+    (md) => "https://life.tonypepe.com/posts/" + md.path
+  );
+  let urls = "httpd://life.tonypepe.com\n";
+  posts_urls.forEach((url) => {
+    urls += url + "\n";
+  });
+  fs.writeFileSync("./public/sitemap.txt", urls);
 };
 
 interface MDData {
