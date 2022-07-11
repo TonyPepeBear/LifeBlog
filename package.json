@@ -11,7 +11,7 @@
     "dev": "gatsby develop -H 0.0.0.0",
     "build": "gatsby build",
     "prettier": "prettier --write .",
-    "commit": "npx prettier --write . && git add . && git commit -m Update"
+    "commit": "prettier --write . && git add . && git commit -m Update"
   },
   "dependencies": {
     "@mdx-js/mdx": "^1.6.22",
