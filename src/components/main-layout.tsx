@@ -19,7 +19,7 @@ const MainLayout = (props: Props) => {
         </a>
       </nav>
       <article className="h-10" /> {/* space */}
-      <main className="bg-white mx-0 lg:mx-40 xl:mx-60 ">
+      <main className="bg-white mx-0 lg:mx-40 xl:mx-50 2xl:mx-80">
         <img
           className="w-full h-60 sm:h-80 xl:h-100 object-cover"
           src={image}
@@ -34,7 +34,7 @@ const MainLayout = (props: Props) => {
 };
 
 const defaultImage =
-  "https://images.unsplash.com/photo-1470004914212-05527e49370b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80";
+  "https://imagedelivery.net/cdkaXPuFls5qlrh3GM4hfA/b6871241-ba25-401c-871f-857eef8be900/public";
 
 interface Props {
   title?: string;

@@ -7,6 +7,7 @@ const PostTemplate = (props: Props) => {
   const { raw_md } = props.pageContext;
   const md = new Showdown.Converter({
     metadata: true,
+    disableForced4SpacesIndentedSublists: true,
     extensions: [...customMDClass],
   });
   const html = md.makeHtml(raw_md);
@@ -14,14 +15,19 @@ const PostTemplate = (props: Props) => {
   const metaData: MetaData = yaml.parse(md.getMetadata(true));
 
   return (
-    <MainLayout title={metaData.title + " - TonyPepe Life"}>
+    <MainLayout
+      title={metaData.title + " - TonyPepe Life"}
+      image={metaData.image}
+    >
       <div className="px-2 md:px-10 text-justify">
         <h1 className="text-4xl">{metaData.title}</h1>
         <time dateTime={metaData.date}>{metaData.date}</time>
-        <div>{JSON.stringify(metaData.tags)}</div>
-        <article dangerouslySetInnerHTML={{ __html: html }} />
+        <article
+          className="text-xl"
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
         <hr /> {/* h line */}
-        <div className="py-6 flex">
+        <div className="py-6 flex flex-wrap">
           tags: &ensp;
           {metaData.tags.map((tag) => (
             <div className="mr-2">{tag}</div>
@@ -48,7 +54,7 @@ interface MetaData {
 
 const customClasses = {
   h2: "text-3xl font-bold",
-  p: "text-xl",
+  img: "max-w-full",
 };
 
 const customMDClass = Object.keys(customClasses).map((key) => {

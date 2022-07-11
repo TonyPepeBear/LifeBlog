@@ -7,7 +7,10 @@ export default function IndexPage({ pageContext }: Props) {
   const { mdData } = pageContext;
   const fullData = mdData
     .map((f) => {
-      const converter = new Showdown.Converter({ metadata: true });
+      const converter = new Showdown.Converter({
+        metadata: true,
+        disableForced4SpacesIndentedSublists: true,
+      });
       converter.makeHtml(f.raw);
       // @ts-ignore
       const metaData: MetaData = yaml.parse(converter.getMetadata(true));
@@ -34,9 +37,10 @@ export default function IndexPage({ pageContext }: Props) {
                   className="w-full h-40 object-cover"
                   src={metaData.image}
                 />
-                <h2 className="text-xl">{metaData.title}</h2>
-                <time dateTime={metaData.date}>{metaData.date}</time>
-                <div className="h-4" />
+                <div className="px-2 pb-6">
+                  <h2 className="text-xl">{metaData.title}</h2>
+                  <time dateTime={metaData.date}>{metaData.date}</time>
+                </div>
               </div>
             </a>
           );
