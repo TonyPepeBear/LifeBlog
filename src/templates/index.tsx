@@ -5,19 +5,46 @@ import MainLayout from "../components/main-layout";
 
 export default function IndexPage({ pageContext }: Props) {
   const { mdData } = pageContext;
-  const fullData = mdData.map((f) => {
-    const converter = new Showdown.Converter({ metadata: true });
-    converter.makeHtml(f.raw);
-    // @ts-ignore
-    const metaData: MetaData = yaml.parse(converter.getMetadata(true));
-    const fullData: MDFullData = {
-      ...f,
-      metaData,
-    };
-    return fullData;
-  });
-
-  return <MainLayout>{JSON.stringify(fullData)}</MainLayout>;
+  const fullData = mdData
+    .map((f) => {
+      const converter = new Showdown.Converter({ metadata: true });
+      converter.makeHtml(f.raw);
+      // @ts-ignore
+      const metaData: MetaData = yaml.parse(converter.getMetadata(true));
+      const fullData: MDFullData = {
+        ...f,
+        metaData,
+      };
+      return fullData;
+    })
+    .sort((a, b) => {
+      const aDate = new Date(a.metaData.date);
+      const bDate = new Date(b.metaData.date);
+      return bDate.getTime() - aDate.getTime();
+    });
+  return (
+    <MainLayout>
+      <div className="pt-6 px-2 text-justify grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-3 gap-y-6">
+        {fullData.map((d) => {
+          const { metaData } = d;
+          return (
+            <a href={"/posts/" + d.path} className="text-black no-underline">
+              <div className="shadow-lg">
+                <img
+                  className="w-full h-40 object-cover"
+                  src={metaData.image}
+                />
+                <h2 className="text-xl">{metaData.title}</h2>
+                <time dateTime={metaData.date}>{metaData.date}</time>
+                <div className="h-4" />
+              </div>
+            </a>
+          );
+        })}
+      </div>
+      <div className="h-6" /> {/* space */}
+    </MainLayout>
+  );
 }
 
 interface Props {
