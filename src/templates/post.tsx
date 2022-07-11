@@ -55,6 +55,7 @@ interface MetaData {
 const customClasses = {
   h2: "text-3xl font-bold",
   img: "max-w-full",
+  a: "text-black underline",
 };
 
 const customMDClass = Object.keys(customClasses).map((key) => {
