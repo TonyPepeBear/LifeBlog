@@ -1,35 +1,72 @@
 import { GatsbyNode } from "gatsby";
 import * as fs from "fs";
-import * as showdown from "showdown";
+import path from "path";
 
 export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
   actions,
 }) => {
-  console.log("-------createPages--------");
-  console.log(getAllMarkdownFiles());
-  const c = new showdown.Converter({ metadata: true });
-  const html = c.makeHtml(fs.readFileSync(getAllMarkdownFiles()[0], "utf8"));
-  console.log(html);
-  console.log(c.getMetadata());
-  
+  console.log("------- createPages --------");
+  const postsResult = await graphql<PostsQueryResult>(postsQuery);
+  const allMarkdownFiles = postsResult.data!!.allFile.edges.map(
+    (f) => f.node.absolutePath
+  );
+  console.log(allMarkdownFiles);
+  const allRawMD: MDData[] = [];
+  allMarkdownFiles.forEach((file) => {
+    const url_path = file
+      .split("/posts/")[1]
+      .replaceAll("/", "-")
+      .replaceAll(" ", "-")
+      .replaceAll(".md", "");
+    allRawMD.push({
+      path: url_path,
+      raw: fs.readFileSync(file, "utf8"),
+    });
+    actions.createPage({
+      path: "/posts/" + url_path,
+      component: path.resolve("src/templates/post.tsx"),
+      context: {
+        raw_md: fs.readFileSync(file, "utf8"),
+      },
+    });
+  });
+  actions.createPage({
+    path: "/",
+    component: path.resolve("src/templates/index.tsx"),
+    context: {
+      mdData: allRawMD,
+    },
+  });
 };
 
-function getAllMarkdownFiles(file = "src/posts"): string[] {
-  console.log(file);
-  if (fs.lstatSync(file).isDirectory()) {
-    const files: string[] = [];
-    fs.readdirSync(file).forEach((f) => {
-      if (f.endsWith(".md")) {
-        files.push(file + "/" + f);
-      } else {
-        files.push(...getAllMarkdownFiles(file + "/" + f));
+interface MDData {
+  path: string;
+  raw: string;
+}
+
+const postsQuery = `{
+  allFile(filter: {sourceInstanceName: {eq: "posts"}}) {
+    edges {
+      node {
+        id
+        name
+        sourceInstanceName
+        absolutePath
       }
-    });
-    return files;
+    }
   }
-  if (file.endsWith(".md")) {
-    return [file];
-  }
-  return [];
+}`;
+
+interface PostsQueryResult {
+  allFile: {
+    edges: {
+      node: {
+        id: string;
+        name: string;
+        sourceInstanceName: string;
+        absolutePath: string;
+      };
+    }[];
+  };
 }
