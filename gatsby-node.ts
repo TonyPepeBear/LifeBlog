@@ -43,7 +43,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
   const posts_urls = allRawMD.map(
     (md) => "https://life.tonypepe.com/posts/" + md.path
   );
-  let urls = "httpd://life.tonypepe.com\n";
+  let urls = "https://life.tonypepe.com\n";
   posts_urls.forEach((url) => {
     urls += url + "\n";
   });
