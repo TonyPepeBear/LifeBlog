@@ -60,11 +60,10 @@ interface Props {
 interface MDData {
   path: string;
   raw: string;
+  git_history_time: string;
 }
 
-interface MDFullData {
-  path: string;
-  raw: string;
+interface MDFullData extends MDData {
   metaData: MetaData;
 }
 

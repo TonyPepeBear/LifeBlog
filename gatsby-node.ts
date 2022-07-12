@@ -1,6 +1,7 @@
 import { GatsbyNode } from "gatsby";
 import * as fs from "fs";
 import path from "path";
+import { execSync } from "child_process";
 
 export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
@@ -22,12 +23,15 @@ export const createPages: GatsbyNode["createPages"] = async ({
     allRawMD.push({
       path: url_path,
       raw: fs.readFileSync(file, "utf8"),
+      git_history_time: execSync(
+        "git log --pretty=%ci" + " " + file.replaceAll(" ", "\\ ")
+      ).toString(),
     });
     actions.createPage({
       path: "/posts/" + url_path,
       component: path.resolve("src/templates/post.tsx"),
       context: {
-        raw_md: fs.readFileSync(file, "utf8"),
+        mdData: allRawMD[allRawMD.length - 1],
       },
     });
   });
@@ -53,6 +57,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
 interface MDData {
   path: string;
   raw: string;
+  git_history_time: string;
 }
 
 const postsQuery = `{

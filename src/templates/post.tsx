@@ -4,7 +4,9 @@ import Showdown from "showdown";
 import * as yaml from "yaml";
 
 const PostTemplate = (props: Props) => {
-  const { raw_md } = props.pageContext;
+  const { mdData } = props.pageContext;
+  const raw_md = mdData.raw;
+
   const md = new Showdown.Converter({
     metadata: true,
     disableForced4SpacesIndentedSublists: true,
@@ -27,12 +29,26 @@ const PostTemplate = (props: Props) => {
           dangerouslySetInnerHTML={{ __html: html }}
         />
         <hr /> {/* h line */}
+        {/* tags */}
         <div className="py-6 flex flex-wrap">
           tags: &ensp;
           {metaData.tags.map((tag) => (
             <div className="mr-2">{tag}</div>
           ))}
         </div>
+        <div>
+          <a
+            rel="license"
+            href="http://creativecommons.org/licenses/by-nc-nd/4.0/"
+            target="_blank"
+          >
+            <img
+              alt="創用 CC 授權條款"
+              src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"
+            />
+          </a>
+        </div>
+        <div className="h-8" /> {/* space */}
       </div>
     </MainLayout>
   );
@@ -40,8 +56,14 @@ const PostTemplate = (props: Props) => {
 
 interface Props {
   pageContext: {
-    raw_md: string;
+    mdData: MDData;
   };
+}
+
+interface MDData {
+  path: string;
+  raw: string;
+  git_history_time: string;
 }
 
 interface MetaData {
