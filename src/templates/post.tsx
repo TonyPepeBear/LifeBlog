@@ -39,7 +39,7 @@ const PostTemplate = (props: Props) => {
         <div>
           <a
             rel="license"
-            href="http://creativecommons.org/licenses/by-nc-nd/4.0/"
+            href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh_TW"
             target="_blank"
           >
             <img
