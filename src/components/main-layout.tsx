@@ -9,6 +9,11 @@ const MainLayout = (props: Props) => {
     <article className="bg-gray-1">
       <Helmet title={title}>
         <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime" />
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-P8BKJWQW7W"
+        />
+        <script src="/g-analytics.js" />
       </Helmet>
       <article className="h-10" /> {/* space */}
       <nav className="flex justify-center">
