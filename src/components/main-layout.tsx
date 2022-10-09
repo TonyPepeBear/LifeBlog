@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import "../styles/main-layout.css";
 
 const MainLayout = (props: Props) => {
-  const { title = "TonyPepe - Life", children, image = defaultImage } = props;
+  const { title = "到處玩玩", children, image = defaultImage } = props;
   React.useEffect(() => {}, []);
   return (
     <article className="bg-gray-1">
@@ -19,7 +19,7 @@ const MainLayout = (props: Props) => {
       <nav className="flex justify-center">
         <a href="/" className="no-underline">
           <div className="font-bold text-3xl cursor-pointer text-black">
-            TonyPepe - Life
+            到 處 玩 玩
           </div>
         </a>
       </nav>
